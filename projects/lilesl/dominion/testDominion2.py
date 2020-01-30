@@ -4,7 +4,8 @@ Created on Tue Jan 18 18:34:00 2020
 
 @author: lilesl
 
-Bugs introduced:
+Bug introduced: the get_supply() victory cards argument is set to int(nV/nV), meaning the supply will
+have 1 Estate, 1 Duchy, and 1 Province.
 """
 
 import Dominion
@@ -28,13 +29,13 @@ supply_order = {0:['Curse','Copper'],2:['Estate','Cellar','Chapel','Moat'],
                 6:['Gold','Adventurer'],8:['Province']}
 
 #Pick 10 cards from box to be in the supply.
-supply = testUtility.get_supply(box, len(player_names), nC, nV)
+supply = testUtility.get_supply(box, len(player_names), nC, int(nV/nV))
 
 #initialize the trash
 trash = []
 
 #Costruct the Player objects
-players = testUtility.get_players_objs(player_names)
+players = testUtility.get_player_objs(player_names)
 
 #Play the game
 turn = 0
@@ -59,9 +60,8 @@ while not Dominion.gameover(supply):
 dcs = Dominion.cardsummaries(players)
 vp = dcs.loc['VICTORY POINTS']
 vpmax = vp.max()
-winners = []
 
-winstring = testUtility.get_win_string(dcs, vp, vpmax, winners)
+winstring = testUtility.get_win_string(vp, vpmax)
 
 print("\nGAME OVER!!!\n"+winstring+"\n")
 print(dcs)
